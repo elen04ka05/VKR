@@ -67,6 +67,7 @@ class SNPtoCWT:
             processed_signal = self.preprocess_signal(snp_signal)
 
             coefficients, frequencies = self.cwt_transform(processed_signal, wavelet=wavelet)
+            print(f"coefficients = {coefficients}, frequencies = {frequencies}")
 
             color_path = self.create_cwt_image(coefficients, sample_id, cmap='viridis')
 

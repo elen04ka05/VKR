@@ -1,0 +1,68 @@
+ПРИМЕРЫ ТОКЕНОВ И ИХ ID
+========================================
+
+Всего уникальных k-mer: 729
+Mask ID: 729
+
+Первые 20 k-mer из словаря:
+   1. 'TXXATX' -> ID: 0
+   2. 'AXXXAT' -> ID: 1
+   3. 'XAXAAX' -> ID: 2
+   4. 'XTXATT' -> ID: 3
+   5. 'AAXTXA' -> ID: 4
+   6. 'XAXTTX' -> ID: 5
+   7. 'AATXAT' -> ID: 6
+   8. 'ATTATA' -> ID: 7
+   9. 'TAATXT' -> ID: 8
+  10. 'TTXAAX' -> ID: 9
+  11. 'TXAAAA' -> ID: 10
+  12. 'TXTAXX' -> ID: 11
+  13. 'TXATTT' -> ID: 12
+  14. 'XTXTTT' -> ID: 13
+  15. 'TXTATT' -> ID: 14
+  16. 'XTAXAX' -> ID: 15
+  17. 'ATATXA' -> ID: 16
+  18. 'AXXTXA' -> ID: 17
+  19. 'TTTTXX' -> ID: 18
+  20. 'XATATX' -> ID: 19
+
+Примеры из последовательностей:
+
+Последовательность #0:
+Первые 10 токенов:
+  0: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  1: 'TTTTTT' -> Original ID: 680 | Masked ID: 729 [MASK]
+  2: 'TTTTTT' -> Original ID: 680 | Masked ID: 729 [MASK]
+  3: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  4: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  5: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  6: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  7: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  8: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  9: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+
+Последовательность #1:
+Первые 10 токенов:
+  0: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  1: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  2: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  3: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  4: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  5: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  6: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  7: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  8: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  9: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+
+Последовательность #2:
+Первые 10 токенов:
+  0: 'TTTTTT' -> Original ID: 680 | Masked ID: 729 [MASK]
+  1: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  2: 'TTTTTT' -> Original ID: 680 | Masked ID: 729 [MASK]
+  3: 'TTTTTT' -> Original ID: 680 | Masked ID: 729 [MASK]
+  4: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  5: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  6: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  7: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  8: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 
+  9: 'TTTTTT' -> Original ID: 680 | Masked ID: 680 

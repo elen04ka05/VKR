@@ -28,12 +28,13 @@ class SNPtoCWT:
     def cwt_transform(self, snp_signal, wavelet='morl', scales=None):
         signal_length = len(snp_signal)
 
+        max_scales = 256
+
         if scales is None:
             min_scale = 1
-            max_scale = min(signal_length // 4, 128)
+            max_scale = min(signal_length // 4, max_scales)
             num_scales = min(64, max_scale - min_scale)
-            scales = np.arange(min_scale, max_scale + 1,
-                               max(1, (max_scale - min_scale) // num_scales))
+            scales = np.arange(min_scale, max_scale + 1)
 
         try:
             coefficients, frequencies = pywt.cwt(snp_signal, scales, wavelet)
@@ -43,8 +44,14 @@ class SNPtoCWT:
             return np.zeros((len(scales), signal_length)), scales
 
     def create_cwt_image(self, coefficients, sample_id,
-                        cmap='viridis', figsize=(8, 6), dpi=100):
-        fig = plt.figure(figsize=figsize, frameon=False)
+                        cmap='viridis', dpi=300):
+
+        height, width = coefficients.shape
+
+        fig_width = width / dpi  # Ширина в дюймах = пиксели / DPI
+        fig_height = height / dpi
+
+        fig = plt.figure(figsize=(fig_width, fig_height), frameon=False)
         ax = plt.Axes(fig, [0., 0., 1., 1.])
         ax.set_axis_off()
         fig.add_axes(ax)
@@ -52,7 +59,7 @@ class SNPtoCWT:
         im = ax.imshow(np.abs(coefficients),
                        aspect='auto',
                        cmap=cmap,
-                       interpolation='bilinear')
+                       interpolation='nearest') #без интерполяции
 
         output_path = os.path.join(self.output_dir, f'{sample_id}_cwt.png')
         plt.savefig(output_path, dpi=dpi, bbox_inches='tight',
@@ -67,7 +74,7 @@ class SNPtoCWT:
             processed_signal = self.preprocess_signal(snp_signal)
 
             coefficients, frequencies = self.cwt_transform(processed_signal, wavelet=wavelet)
-            print(f"coefficients = {coefficients}, frequencies = {frequencies}")
+            #print(f"coefficients = {coefficients}, frequencies = {frequencies}")
 
             color_path = self.create_cwt_image(coefficients, sample_id, cmap='viridis')
 

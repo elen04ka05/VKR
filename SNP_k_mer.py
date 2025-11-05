@@ -5,8 +5,8 @@ from typing import List, Dict, Tuple
 import json
 import pickle
 
-file = "total_df_for_aio_chickpea_28042016_synchro.csv"
-
+#file = "total_df_for_aio_chickpea_28042016_synchro.csv"
+file = "output_SNP_HAPMAP.csv"
 
 class SNP_to_signal_k_mer:
     def __init__(self, k: int = 6, mask_prob: float = 0.15):
@@ -14,17 +14,12 @@ class SNP_to_signal_k_mer:
         self.mask_prob = mask_prob
         self.vocab = {}
         self.mask_id = None
-        self.letter_map = {
-            0: 'A',  # AA
-            1: 'R',  # Aa
-            2: 'T',  # aa
-        }
 
-    def _snp_to_letters(self, snp_sequence: List[int]) -> List[str]:
-        return [self.letter_map.get(s, 'N') for s in snp_sequence]
+    '''def _snp_to_letters(self, snp_sequence: List[int]) -> List[str]:
+        return [self.letter_map.get(s, 'N') for s in snp_sequence]'''
 
-    def _preprocess_sequence(self, letter_sequence: List[str]) -> List[str]:
-        return [s if s in {'A', 'T', 'C', 'G'} else 'X' for s in letter_sequence]
+    '''def _preprocess_sequence(self, letter_sequence: List[str]) -> List[str]:
+        return [s if s in {'A', 'T', 'C', 'G'} else 'X' for s in letter_sequence]'''
 
     def _create_kmers(self, sequence: List[str]) -> List[str]:
         tokens = []
@@ -56,9 +51,9 @@ class SNP_to_signal_k_mer:
         all_kmers = []
 
         for snp_seq in snp_sequences:
-            letters = self._snp_to_letters(snp_seq)
-            processed = self._preprocess_sequence(letters)
-            kmers = self._create_kmers(processed)
+            #letters = self._snp_to_letters(snp_seq)
+            #processed = self._preprocess_sequence(letters)
+            kmers = self._create_kmers(snp_seq)
             all_kmers.extend(kmers)
 
         self._build_vocab(all_kmers)
@@ -67,9 +62,9 @@ class SNP_to_signal_k_mer:
         print(f"Mask ID: {self.mask_id}")
 
     def transform(self, snp_sequence: List[int]) -> Tuple[List[int], List[str]]:
-        letters = self._snp_to_letters(snp_sequence)
-        processed = self._preprocess_sequence(letters)
-        tokens = self._create_kmers(processed)
+        #letters = self._snp_to_letters(snp_sequence)
+        #processed = self._preprocess_sequence(letters)
+        tokens = self._create_kmers(snp_sequence)
         token_ids = self._tokens_to_ids(tokens)
         masked_ids = self._apply_random_masking(token_ids)
 
@@ -100,11 +95,12 @@ def batch_process_snp_sequences(snp_sequences: List[List[int]], k: int = 6, mask
     return processor, results
 
 
-def load_and_filter_data(file_path, prefix="Ca"):
-    df = pd.read_csv(file_path)
-    selected_columns = [col for col in df.columns if col.startswith(prefix)]
-    new_df = df[selected_columns]
-    return new_df
+def load_and_filter_data(file_path):
+    #df = pd.read_csv(file_path)
+    df = pd.read_csv(file_path, sep=',', engine='python')
+    #selected_columns = [col for col in df.columns if col.startswith(prefix)]
+    #new_df = df[selected_columns]
+    return df
 
 
 def analyze_batch_results(processor: SNP_to_signal_k_mer, results: List[Dict]):
@@ -267,13 +263,14 @@ if __name__ == "__main__":
     print("=" * 60)
 
     df = load_and_filter_data(file)
+
     num_samples = len(df)
-    data_list = df.astype(int).values.tolist()
+    #data_list = df.astype(int).values.tolist()
 
     # Пакетная обработка с параметрами из статьи
     print("\nЗапуск пакетной обработки...")
     processor, results = batch_process_snp_sequences(
-        snp_sequences=data_list,
+        snp_sequences=df,
         k=6,  # 6-mer как в статье
         mask_prob=0.15  # 15% маскирование как в статье
     )

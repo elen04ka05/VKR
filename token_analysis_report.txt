@@ -1,0 +1,77 @@
+================================================================================
+ОТЧЕТ ПО АНАЛИЗУ ТОКЕНОВ
+================================================================================
+
+Файл данных: snp_batch_processing_results_20251226_074153/processed_data.pkl
+ID маски: 12109
+
+СТАТИСТИКА:
+  Всего токенов: 2000
+  Уникальных токенов: 1858
+  Маскированных: 1043 (52.15%)
+  Немаскированных: 957 (47.85%)
+
+РАСПРЕДЕЛЕНИЕ 'X' ПО ПОЗИЦИЯМ:
+  Позиция 1: 301 X (17.3%)
+  Позиция 2: 295 X (17.0%)
+  Позиция 3: 299 X (17.2%)
+  Позиция 4: 265 X (15.3%)
+  Позиция 5: 293 X (16.9%)
+  Позиция 6: 284 X (16.4%)
+
+ТОП-10 МАСКИРОВАННЫХ ТОКЕНОВ:
+  TGTCXT: 2
+  TXAAAA: 2
+  TAGTXC: 2
+  AGXAAA: 2
+  TGXCXT: 2
+  GGAAGX: 2
+  TGCTTX: 2
+  TGAATX: 2
+  TGXAAA: 2
+  XCACGA: 2
+
+ПРИМЕРЫ ТОКЕНОВ:
+Маскированные:
+  XAACAT
+  TAXATA
+  AXAGTG
+  CACXTT
+  GGXTAX
+  TTATGX
+  ACAXTG
+  TGXCAC
+  AXXTAX
+  TXCCGG
+  ATATCX
+  AAXGGT
+  XAAGGC
+  CTAXTA
+  ATXTGG
+  XCCCTC
+  AGTTTX
+  CXGXXG
+  TTGTCX
+  AGCAXA
+
+Немаскированные:
+  AGGCTC
+  TTAGAT
+  GCTGGG
+  TATCTA
+  ACCGAG
+  CTGGTG
+  AGCCGG
+  ATGTAA
+  CATGCG
+  TCCAGC
+  GTCGTT
+  GGGGAT
+  GACCGT
+  GTTTGA
+  TAAATC
+  ATTATC
+  GTTAGG
+  AGGAGA
+  TGCGTA
+  ATGGAA

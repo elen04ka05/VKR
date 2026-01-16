@@ -6,7 +6,7 @@ import json
 import pickle
 
 #file = "total_df_for_aio_chickpea_28042016_synchro.csv"
-file = "output_SNP_HAPMAP.csv"
+file = "final_snp_matrix.csv"
 
 class SNP_to_signal_k_mer:
     def __init__(self, k: int = 6, mask_prob: float = 0.15):
@@ -96,11 +96,38 @@ def batch_process_snp_sequences(snp_sequences: List[List[int]], k: int = 6, mask
 
 
 def load_and_filter_data(file_path):
-    #df = pd.read_csv(file_path)
     df = pd.read_csv(file_path, sep=',', engine='python')
-    #selected_columns = [col for col in df.columns if col.startswith(prefix)]
-    #new_df = df[selected_columns]
-    return df
+
+    print(f"Исходные данные: {df.shape[0]} строк, {df.shape[1]} столбцов")
+
+    nan_count = df.isna().sum().sum()
+    print(f"Общее количество NaN значений в данных: {nan_count}")
+
+    if nan_count > 0:
+        print("Обработка NaN значений...")
+        # Заменяем NaN на 'X' (пропущенные значения)
+        df = df.fillna('X')
+        print("NaN значения заменены на 'X'")
+
+
+    if df.shape[1] > 1:
+        # Если есть несколько колонок, используем все кроме первой как SNP данные
+        snp_data = df.iloc[:, 1:].values.tolist()
+    else:
+        # Если только одна колонка, используем её
+        snp_data = df.values.tolist()
+
+        # Преобразуем в строковый формат
+    snp_sequences = []
+    for row in snp_data:
+        sequence = [str(x) for x in row]
+        snp_sequences.append(sequence)
+
+    print(f"Загружено {len(snp_sequences)} образцов")
+    print(f"Длина первого образца: {len(snp_sequences[0])} SNP")
+    print(f"Пример первых 10 SNP первого образца: {snp_sequences[0][:10]}")
+
+    return snp_sequences
 
 
 def analyze_batch_results(processor: SNP_to_signal_k_mer, results: List[Dict]):
@@ -262,21 +289,22 @@ if __name__ == "__main__":
     print("ПАКЕТНАЯ ОБРАБОТКА SNP ПОСЛЕДОВАТЕЛЬНОСТЕЙ")
     print("=" * 60)
 
-    df = load_and_filter_data(file)
+    snp_sequences  = load_and_filter_data(file)
 
-    num_samples = len(df)
-    #data_list = df.astype(int).values.tolist()
 
     # Пакетная обработка с параметрами из статьи
     print("\nЗапуск пакетной обработки...")
     processor, results = batch_process_snp_sequences(
-        snp_sequences=df,
+        snp_sequences=snp_sequences,
         k=6,  # 6-mer как в статье
         mask_prob=0.15  # 15% маскирование как в статье
     )
 
     # Анализ результатов
     analyze_batch_results(processor, results)
+
+    for i, (kmer, token_id) in enumerate(list(processor.vocab.items())[:20]):
+        print(f"  '{kmer}' -> {token_id}")
 
     results_dir = save_results_to_files(processor, results, "snp_batch_processing")
 

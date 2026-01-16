@@ -1,0 +1,68 @@
+ПРИМЕРЫ ТОКЕНОВ И ИХ ID
+========================================
+
+Всего уникальных k-mer: 15638
+Mask ID: 15638
+
+Первые 20 k-mer из словаря:
+   1. 'XXCATG' -> ID: 0
+   2. 'TXCXGG' -> ID: 1
+   3. 'XCCCGT' -> ID: 2
+   4. 'TCCAXT' -> ID: 3
+   5. 'XTXXTA' -> ID: 4
+   6. 'GXCXCG' -> ID: 5
+   7. 'TTCXCC' -> ID: 6
+   8. 'GXGAGC' -> ID: 7
+   9. 'XCTXTX' -> ID: 8
+  10. 'CXAAGA' -> ID: 9
+  11. 'GXCAGT' -> ID: 10
+  12. 'AGTAAG' -> ID: 11
+  13. 'TGXCTA' -> ID: 12
+  14. 'AACATT' -> ID: 13
+  15. 'XTGAGC' -> ID: 14
+  16. 'XTXXCC' -> ID: 15
+  17. 'GGGTAA' -> ID: 16
+  18. 'CATTTX' -> ID: 17
+  19. 'XAAAXC' -> ID: 18
+  20. 'GTTGGX' -> ID: 19
+
+Примеры из последовательностей:
+
+Последовательность #0:
+Первые 10 токенов:
+  0: 'XXXXTX' -> Original ID: 15237 | Masked ID: 15237 
+  1: 'CXXXXX' -> Original ID: 10113 | Masked ID: 10113 
+  2: 'CXXXXX' -> Original ID: 10113 | Masked ID: 10113 
+  3: 'XXXXXX' -> Original ID: 15418 | Masked ID: 15418 
+  4: 'XXXXXX' -> Original ID: 15418 | Masked ID: 15418 
+  5: 'XXCCAX' -> Original ID: 6610 | Masked ID: 6610 
+  6: 'XTXXXX' -> Original ID: 10880 | Masked ID: 10880 
+  7: 'XXXXXC' -> Original ID: 9131 | Masked ID: 9131 
+  8: 'XXAXCC' -> Original ID: 11114 | Masked ID: 11114 
+  9: 'CXXXXX' -> Original ID: 10113 | Masked ID: 10113 
+
+Последовательность #1:
+Первые 10 токенов:
+  0: 'XXXXXX' -> Original ID: 15418 | Masked ID: 15418 
+  1: 'CXXXXX' -> Original ID: 10113 | Masked ID: 10113 
+  2: 'CXXXXX' -> Original ID: 10113 | Masked ID: 10113 
+  3: 'XXXXXX' -> Original ID: 15418 | Masked ID: 15638 [MASK]
+  4: 'XXXXXX' -> Original ID: 15418 | Masked ID: 15418 
+  5: 'XCCCAX' -> Original ID: 2120 | Masked ID: 15638 [MASK]
+  6: 'XTCXXX' -> Original ID: 2680 | Masked ID: 2680 
+  7: 'XXXXAC' -> Original ID: 7961 | Masked ID: 15638 [MASK]
+  8: 'XXAXXC' -> Original ID: 751 | Masked ID: 751 
+  9: 'CXXXXX' -> Original ID: 10113 | Masked ID: 10113 
+
+Последовательность #2:
+Первые 10 токенов:
+  0: 'XXXXTX' -> Original ID: 15237 | Masked ID: 15237 
+  1: 'XCXXXX' -> Original ID: 13780 | Masked ID: 15638 [MASK]
+  2: 'CXGXXX' -> Original ID: 5327 | Masked ID: 15638 [MASK]
+  3: 'XXXXXX' -> Original ID: 15418 | Masked ID: 15418 
+  4: 'XXXXXX' -> Original ID: 15418 | Masked ID: 15418 
+  5: 'XATACX' -> Original ID: 15470 | Masked ID: 15470 
+  6: 'XXXXGX' -> Original ID: 9718 | Masked ID: 9718 
+  7: 'XXXXXX' -> Original ID: 15418 | Masked ID: 15418 
+  8: 'CXXXXX' -> Original ID: 10113 | Masked ID: 10113 
+  9: 'XXXXXA' -> Original ID: 9820 | Masked ID: 9820 

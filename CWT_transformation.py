@@ -1,3 +1,5 @@
+#ПРЕОБРАЗОВАНИЕ SNP данныХ (представленныХ в формате HW-кодирования) в CWT-ИЗОБРАЖЕНИЯ
+
 import os
 import pandas as pd
 from PIL import Image

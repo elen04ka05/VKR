@@ -41,7 +41,6 @@ def frequency_calculation(file_path, SNP):
 
 df_hw_selected = frequency_calculation(file, load_and_filter_data(file))
 
-#print(df_hw_selected)
 
 df_hw_selected.to_csv("hw_encoded_snps.csv")
 print("Данные сохранены в hw_encoded_snps.csv")

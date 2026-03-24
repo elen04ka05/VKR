@@ -21,7 +21,7 @@ print()
 print("First sequence embeddings (first 5 positions, first 5 dimensions):")
 print(embeddings[0, :5, :5])'''
 
-import torch
+'''import torch
 
 # Загружаем файл
 data = torch.load("genomic_mlm_data.pt")
@@ -57,4 +57,13 @@ print("First sequence labels (first 20 tokens):")
 print(first_batch['labels'][0][:20])
 print()
 print("First sequence attention_mask (first 20 tokens):")
-print(first_batch['attention_mask'][0][:20])
+print(first_batch['attention_mask'][0][:20])'''
+
+import torch
+import sys
+print(f"Python version: {sys.version}")
+print(f"PyTorch version: {torch.__version__}")
+
+# Проверка CUDA
+cuda_available = torch.cuda.is_available()
+print(f"CUDA available: {cuda_available}")

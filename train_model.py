@@ -230,6 +230,84 @@ class GenomicDataset(Dataset):
         }
 
 
+class AugmentedGenomicDataset(GenomicDataset):
+    def __init__(self, sequences_file, phenotypes_file,
+                 max_seq_len=None, pad_id=0,
+                 n_augmentations=5, mask_prob=0.15,
+                 vocab_size=12110,
+                 balance_strategy='oversample'):
+
+        self.n_augmentations = n_augmentations
+        self.mask_prob = mask_prob
+        self.mask_id = vocab_size - 1
+        self.balance_strategy = balance_strategy
+
+        super().__init__(sequences_file, phenotypes_file, max_seq_len, pad_id)
+
+        self._create_augmented_dataset()
+
+    def _apply_masking(self, sequence):
+        """Применяет случайное маскирование к последовательности"""
+        import random
+        masked = []
+        for token in sequence:
+            if random.random() < self.mask_prob:
+                masked.append(self.mask_id)
+            else:
+                masked.append(token)
+        return masked
+
+    def _create_augmented_dataset(self):
+        """Создает сбалансированный аугментированный датасет"""
+        import numpy as np
+
+        # Конвертируем метки в numpy
+        labels_np = np.array([label.item() for label in self.labels])
+
+        # Считаем распределение
+        unique, counts = np.unique(labels_np, return_counts=True)
+        label_counts = dict(zip(unique, counts))
+
+        print(f"\n=== АУГМЕНТАЦИЯ ДАННЫХ ===")
+        print(f"Исходное распределение: {label_counts}")
+        print(f"Всего образцов: {len(self.sequences)}")
+
+        max_samples = max(counts)
+
+        augmented_sequences = []
+        augmented_labels = []
+
+        for seq, label in zip(self.sequences, labels_np):
+            # Добавляем оригинал
+            augmented_sequences.append(seq)
+            augmented_labels.append(label)
+
+            # Вычисляем сколько реплик нужно
+            n_current = label_counts[label]
+            if n_current < max_samples:
+                n_needed = max_samples - n_current
+                n_replicas = min(
+                    max(1, n_needed // n_current),
+                    self.n_augmentations
+                )
+
+                # Создаем реплики
+                for _ in range(n_replicas):
+                    masked_seq = self._apply_masking(seq.copy())
+                    augmented_sequences.append(masked_seq)
+                    augmented_labels.append(label)
+
+        # Обновляем данные
+        self.sequences = augmented_sequences
+        self.labels = torch.tensor(augmented_labels, dtype=torch.long)
+
+        # Выводим статистику
+        final_unique, final_counts = np.unique(augmented_labels, return_counts=True)
+        print(f"\nИтоговое распределение: {dict(zip(final_unique, final_counts))}")
+        print(f"Всего образцов после аугментации: {len(self.sequences)}")
+        print(f"Увеличение датасета: {len(self.sequences) / len(labels_np):.1f}x")
+        print("=" * 50)
+
 def plot_training_history(train_losses, val_losses, train_accs, val_accs, save_path='training_history.png'):
 
     fig, axes = plt.subplots(1, 2, figsize=(14, 5))
@@ -321,7 +399,9 @@ def train_classifier(
         use_positional_encoding=True,
         save_path="ascochyta_classifier.pt",
         plots_dir=None,
-        device=None
+        device=None,
+        n_augmentations=5,
+        mask_prob=0.15
 ):
     if plots_dir is None:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -335,11 +415,22 @@ def train_classifier(
     print(f"Using device: {device}")
     print(f"Use positional encoding: {use_positional_encoding}")
 
-    dataset = GenomicDataset(
+    '''dataset = GenomicDataset(
         sequences_file=sequences_file,
         phenotypes_file=phenotypes_file,
         max_seq_len=None,
         pad_id=pad_id
+    )'''
+
+    dataset = AugmentedGenomicDataset(
+        sequences_file=sequences_file,
+        phenotypes_file=phenotypes_file,
+        max_seq_len=None,
+        pad_id=pad_id,
+        n_augmentations=n_augmentations,
+        mask_prob=mask_prob,
+        vocab_size=vocab_size,  # ⭐ ВАЖНО!
+        balance_strategy='oversample'
     )
 
     # Анализ распределения классов
